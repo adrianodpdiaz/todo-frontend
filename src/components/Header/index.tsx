@@ -20,16 +20,16 @@ export function Header() {
         />
       </div>
       <div className={styles.picContainer}>
-      {user?.avatar != undefined && (
-        <Image
-          src={user?.avatar}
-          alt="User profile picture"
-          width={50}
-          height={50}
-          onClick={() => setOpen(!open)}
-        />
-      )}
-      {open && <DropDownMenu />}
+        {user?.avatar != undefined && (
+          <Image
+            src={user?.avatar}
+            alt="User profile picture"
+            width={50}
+            height={50}
+            onClick={() => setOpen(!open)}
+          />
+        )}
+        {open && <DropDownMenu />}
       </div>
     </header>
   )

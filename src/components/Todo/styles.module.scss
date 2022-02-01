@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   border-radius: 10px;
-  min-height: 70px;
+  min-height: 4.375rem;
   background: var(--gray-500);
 
   .contentContainer {
@@ -22,26 +22,28 @@
   
       border: 2px solid var(--purple-500);
       border-radius: 50%;
-      cursor: pointer;
   
       img {
         max-width: 15px;
         max-height: 15px;
+      }
+
+      &:hover {
+        opacity: 85%;
       }
     }
   
     p {
       font-size: 1.8rem;
       color: var(--gray-200);
-      line-height: 1.5rem;
+      line-height: 1.2rem;
   
-      margin-top: 5px;
+      margin-top: 10px;
     }
   
     span {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: var(--purple-500);
-      line-height: 1.5rem;
     }
   }
 
@@ -56,18 +58,18 @@
   }
 
   button {
-    margin-right: 15px;
+    margin-right: 10px;
 
-    height: 25px;
-    border-radius: 5px;
-    padding: 0 5px;
-    min-width: 70px;
-
-    border: none;
-    font-size: 1.5rem !important;
-    line-height: 1.8rem;
-    color: var(--gray-800);
+    font-size: 1.7rem;
+    max-height: 1.875rem;
+    padding: 5px 10px 0 10px;
+    min-width: 4.375rem;
 
     background: var(--orange-400);
+
+    &:hover {
+      background: var(--orange-400);
+      opacity: 95%;
+    }
   }
 }

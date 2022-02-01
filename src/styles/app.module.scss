@@ -1,5 +1,7 @@
 .wrapper {
   display: flex;
+  min-height: 100vh;
+  background: var(--gray-800);
 
   main {
     flex: 1;

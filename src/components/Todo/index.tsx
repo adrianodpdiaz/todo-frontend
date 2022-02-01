@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useContext } from 'react';
 import { TodoListContext } from '../../contexts/TodoListContext';
@@ -39,7 +40,10 @@ export function Todo({ id, content, deadline, completed }: TodoProps) {
     <div className={styles.todo}>
       <div className={!completed ? styles.contentContainer :
         [styles.completed, styles.contentContainer].join(" ")}>
-        <div onClick={() => handleComplete(id)}>
+        <div 
+          onClick={() => handleComplete(id)}
+          style={!completed ? { cursor: "pointer"} : { cursor: "normal"}}
+          >
           <Image
             src={!completed ? "/complete.svg" : "/completed.svg"}
             alt="Todo completed"
@@ -52,7 +56,13 @@ export function Todo({ id, content, deadline, completed }: TodoProps) {
           <span>{deadline}</span>
         </div>
       </div>
-      <button onClick={() => handleDelete(id)}>Delete</button>
+      <Button
+        onClick={() => handleDelete(id)}
+        size="sm"
+        color="gray.800"
+      >
+        Delete
+      </Button>
     </div>
   )
 }

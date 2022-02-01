@@ -3,6 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 
+  font-family: Dongle, sans-serif;
+
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -50,17 +52,12 @@
   }
 }
 
-body {
-  background: var(--gray-800);
-}
-
 body, input, textarea, button, span {
-  font: 500 1rem Dongle, sans-serif;
+  font: 500 1.6rem Dongle, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  font-family: Dongle, sans-serif;
   color: var(--gray-200);
 }
 
