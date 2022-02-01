@@ -1,0 +1,42 @@
+.pageAuth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  height: 100vh;
+
+  .companyLogo {
+    max-width: 18.75rem;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 8px;
+
+    background: var(--white);
+    border: none;
+    border-radius: 5px;
+
+    transition: filter 0.2s;
+    
+    &:hover {
+      filter: brightness(0.9)
+    }
+
+    .googleLogo {
+      max-width: 1.8rem;
+      max-height: 1.8rem;
+    }
+
+    span {
+      font-size: 1.6rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+      margin-right: 5px;
+    }
+  }
+}
