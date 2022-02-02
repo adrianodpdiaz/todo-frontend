@@ -2,6 +2,7 @@ import { Button } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useCompleteTodo, useDeleteTodo } from '../../hooks/useTodoList';
 import styles from './styles.module.scss';
+import moment from "moment";
 
 type TodoProps = {
   id: number;
@@ -41,7 +42,10 @@ export function Todo({ id, content, deadline, completed }: TodoProps) {
         </div>
         <div>
           <p>{content}</p>
-          <span>{deadline}</span>
+          <span>
+            {moment(deadline).format("d-MMM-YYYY") == moment(new Date()).format("d-MMM-YYYY")
+              ? 'Today' : moment(deadline).format("d-MMM-YYYY")}
+          </span>
         </div>
       </div>
       <Button
