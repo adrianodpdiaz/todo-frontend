@@ -43,8 +43,8 @@ export function Todo({ id, content, deadline, completed }: TodoProps) {
         <div>
           <p>{content}</p>
           <span>
-            {moment(deadline).format("d-MMM-YYYY") == moment(new Date()).format("d-MMM-YYYY")
-              ? 'Today' : moment(deadline).format("d-MMM-YYYY")}
+            {moment(deadline).format("D-MMM-YYYY") == moment(new Date()).format("D-MMM-YYYY") ?
+              'Today' : moment(deadline).format("D-MMM-YYYY")}
           </span>
         </div>
       </div>
