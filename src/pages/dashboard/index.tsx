@@ -1,13 +1,16 @@
 import { AddTask } from "../../components/AddTask";
 import { Header } from "../../components/Header";
 import { Todo } from "../../components/Todo";
-import { useContext } from "react";
 
 import styles from './dashboard.module.scss';
-import { TodoListContext } from "../../contexts/TodoListContext";
+import { useTodoList } from "../../hooks/useTodoList";
 
 export default function Dashboard() {
-  const { todos } = useContext(TodoListContext);
+  const { data: todos, isLoading: isLoadingTodos } = useTodoList();
+
+  if(isLoadingTodos) {
+    return <h2>Loading...</h2>
+  }
 
   return (
     <>
@@ -16,7 +19,7 @@ export default function Dashboard() {
         <AddTask />
         <h1>ToDo</h1>
         <div className={styles.todosContainer}>
-          {todos.map(todo => {
+          {todos?.map(todo => {
             if(!todo.completed) {
               return (
                 <Todo
@@ -32,7 +35,7 @@ export default function Dashboard() {
         </div>
         <h1>Completed</h1>
         <div className={styles.completedContainer}>
-          {todos.map(todo => {
+          {todos?.map(todo => {
             if(todo.completed) {
               return (
                 <Todo

@@ -1,8 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useContext } from 'react';
-import { TodoListContext } from '../../contexts/TodoListContext';
-import { api } from '../../services/api';
+import { useCompleteTodo, useDeleteTodo } from '../../hooks/useTodoList';
 import styles from './styles.module.scss';
 
 type TodoProps = {
@@ -10,29 +8,19 @@ type TodoProps = {
   content: string;
   completed: boolean;
   deadline: Date;
-  userId?: string;
 }
 
 export function Todo({ id, content, deadline, completed }: TodoProps) {
-  const { reload, setReload } = useContext(TodoListContext);
+  const { mutate: deleteTodo } = useDeleteTodo();
+  const { mutate: completeTodo } = useCompleteTodo();
 
   async function handleDelete(id: number) {
-      try {
-        await api.delete(`/todo/${id}`)
-        .then(() => setReload(!reload));
-      } catch(e) {
-        console.log(e.message);
-      }
+    deleteTodo(id);
   }
 
   async function handleComplete(id: number) {
     if(!completed) {
-      try {
-        await api.patch(`/todo/complete/${id}`)
-        .then(() => setReload(!reload));
-      } catch(e) {
-        console.log(e.message);
-      }
+      completeTodo(id);
     }
   }
 

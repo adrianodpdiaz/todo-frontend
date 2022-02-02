@@ -1,16 +1,23 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { Button, Textarea } from '@chakra-ui/react';
 
 import { useAuth } from '../../hooks/useAuth';
-import { api } from '../../services/api';
-import { TodoListContext } from '../../contexts/TodoListContext';
+import { useAddTodoData } from '../../hooks/useTodoList';
 
 import styles from './styles.module.scss';
 
+type TodoType = {
+  id?: number;
+  content: string;
+  completed?: boolean;
+  deadline: Date;
+  userId: string;
+}
+
 export function AddTask() {
   const { user } = useAuth();
-  const { reload, setReload } = useContext(TodoListContext);
+  const { mutate } = useAddTodoData();
   const [ editField, setEditField ] = useState(false);
   const [ newTodo, setNewTodo ] = useState('');
   const [ selectedDate, setSelectedDate ] = useState(new Date());
@@ -24,21 +31,14 @@ export function AddTask() {
       throw new Error('You must be logged in.')
     }
 
-    const question = {
+    const todo: TodoType = {
       userId: user.id,
       content: newTodo,
       deadline: selectedDate
     }
 
-    try {
-      await api.post('/todo', question)
-      .then(() => {
-        handleCancel();
-        setReload(!reload);
-      });
-    } catch(e) {
-      console.log(e.message);
-    }
+    mutate(todo);
+    handleCancel();
   }
   
   function handleCancel() {
@@ -73,6 +73,7 @@ export function AddTask() {
             <DatePickerComponent
               value={selectedDate}
               format="dd-MMM-yyyy"
+              onChange={event => setSelectedDate(event.target.value)}
             />
           </div>
           <div>

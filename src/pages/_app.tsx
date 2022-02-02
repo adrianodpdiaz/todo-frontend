@@ -2,22 +2,26 @@ import '../services/firebase';
 import '../styles/global.scss';
 import styles from '../styles/app.module.scss';
 import { AuthContextProvider } from '../contexts/AuthContext';
-import { TodoListContextProvider } from '../contexts/TodoListContext';
 import { ChakraProvider } from '@chakra-ui/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+const queryClient = new QueryClient();
 
 function App({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <AuthContextProvider>
-        <TodoListContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <AuthContextProvider>
           <div className={styles.wrapper}>
             <main>
               <Component {...pageProps} />
             </main>
           </div>
-        </TodoListContextProvider>
-      </AuthContextProvider>
-    </ChakraProvider>
+        </AuthContextProvider>
+      </ChakraProvider>
+      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+    </QueryClientProvider>
   )
 }
 
