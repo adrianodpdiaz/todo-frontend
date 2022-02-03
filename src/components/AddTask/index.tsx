@@ -1,9 +1,12 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { Button, Textarea } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useAuth } from '../../hooks/useAuth';
 import { useAddTodoData } from '../../hooks/useTodoList';
+import { schemaYup } from '../../services/yup';
 
 import styles from './styles.module.scss';
 
@@ -18,15 +21,15 @@ type TodoType = {
 export function AddTask() {
   const { user } = useAuth();
   const { mutate } = useAddTodoData();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schemaYup)
+  });
+
   const [ editField, setEditField ] = useState(false);
   const [ newTodo, setNewTodo ] = useState('');
   const [ selectedDate, setSelectedDate ] = useState(new Date());
 
-  async function handleSendTask(event: FormEvent) {
-    event.preventDefault();
-    if(newTodo.trim() === '') {
-      return;
-    }
+  async function handleSendTask() {
     if(!user) {
       throw new Error('You must be logged in.')
     }
@@ -37,14 +40,14 @@ export function AddTask() {
       deadline: selectedDate
     }
 
-    mutate(todo);
     handleCancel();
+    mutate(todo);
   }
   
   function handleCancel() {
+    setNewTodo('');
     setEditField(false);
     setSelectedDate(new Date());
-    setNewTodo('');
   }
 
   return (
@@ -60,14 +63,25 @@ export function AddTask() {
     </div>
     ) || (
     <div className={styles.newTask}>
-      <form onSubmit={handleSendTask}>
+      <form onSubmit={handleSubmit(handleSendTask)}>
         <Textarea
           value={newTodo}
+          {...register("newTaskBody")}
           onChange={event => setNewTodo(event.target.value)}
           size="sm"
           focusBorderColor="transparent"
           border="none"
         />
+
+        <span className={styles.errorMsg}>
+          {
+            errors.newTaskBody &&
+            new String(
+              errors.newTaskBody?.message
+            ).replace('newTaskBody', 'Your input')
+          }
+        </span>
+
         <div id={styles.utilButtons}>
           <div>
             <DatePickerComponent
